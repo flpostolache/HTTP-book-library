@@ -1,0 +1,173 @@
+Prenume si Nume: Florin Postolache
+Grupa: 325CC
+
+    Username si parola folosite in testare:
+    - username: maniatru
+    - parola: 123456
+
+    Alegerea bibliotecii json nlohmann:
+        - pagina de github mai primitoare
+        - instructiuni mult mai clare de instalare
+        - experienta temei trecute mi-a spus ca 
+    rezolvarea temelor la PC este mai usoara in C++
+        - mult mai intuitiv de utilizat (seamana cu
+    map-ul din c++)
+
+    Materiale din laborator utilizate:
+        - requests.c si requests.h (modificate pentru a satisface noile cerinte)
+        - helpers.c si helpers.h (transformate pentru a putea fi compilate cu c++)
+        - buffer.c si buffer.h (transformate pentru a putea fi compilate cu c++)
+
+    Intr-un while infinit citesc si ignor orice comanda in afara de:
+        - register
+        - login
+        - enter_library
+        - get_books
+        - get_book
+        - add_book
+        - delete_book
+        - logout
+        - exit
+    
+    Ce se intampla daca clientul scrie comanda exit:
+        - se iese din bucla infinita
+        - se inchide conexiunea dintre client si server
+    
+    Ce se intampla daca clientul scrie comanda register:
+        - citesc numele de utilizator de la tastatura
+        - il adaug in structura de tip json oferita de
+        nlohmann
+        - citesc parola de la tastatura
+        - o adaug in structura de tip json oferita de
+        nlohmann
+        - creez un mesaj cu ajutorul functiei compute_post_request 
+        cu urmatorii parametrii:
+            * adresa ip a server-ului catre care trebuie sa transmit date
+            * ruta de acces: /api/v1/tema/auth/register
+            * tipul de payload: application/json
+            * un json cu datele pe care trebuie sa le trimit serverului
+        - afisez mesajul pe care vreau sa il trimit
+        - trimit mesajul catre server
+        - astept sa primesc raspuns de la server
+        - afisez raspunsul
+
+    Ce se intampla daca clientul scrie comanda login:
+        - citesc numele de utilizator de la tastatura
+        - il adaug in structura de tip json oferita de
+        nlohmann
+        - citesc parola de la tastatura
+        - o adaug in structura de tip json oferita de
+        nlohmann
+        - creez un mesaj cu ajutorul functiei compute_post_request 
+        cu urmatorii parametrii:
+            * adresa ip a server-ului catre care trebuie sa transmit date
+            * ruta de acces: /api/v1/tema/auth/login
+            * tipul de payload: application/json
+            * un json cu datele pe care trebuie sa le trimit serverului
+        - afisez mesajul pe care vreau sa il trimit
+        - trimit mesajul catre server
+        - astept sa primesc raspuns de la server
+        - afisez raspunsul
+        - in cazul in care si mesajul meu si raspunsul de la server este
+        fara erori, salvez cookie-ul de sesiune pe care trebuie sa il primesc
+        de la server
+
+    Ce se intampla daca clientul scrie comanda enter_library:
+        - verific daca am cookie de sesiune
+        - creez un mesaj cu ajutorul functiei compute_get_request
+        cu urmatorii parametrii:
+            * adresa ip a server-ului catre care trebuie sa transmit date
+            * ruta de acces: /api/v1/tema/library/access
+            * cookie-uri (daca am)
+        - afisez mesajul pe care vreau sa il trimit
+        - trimit mesajul catre server
+        - astept sa primesc raspuns de la server
+        - afisez raspunsul
+        - in cazul in care si mesajul meu si raspunsul de la server este
+        fara erori, salvez token-ul de tip JWT pe care trebuie sa il primesc
+        de la server
+
+
+    Ce se intampla daca clientul scrie comanda get_books:
+        - creez un mesaj cu ajutorul functiei compute_get_request 
+        cu urmatorii parametrii:
+            * adresa ip a server-ului catre care trebuie sa transmit date
+            * ruta de acces: /api/v1/tema/library/books
+            * token-ul de tip JWT (in cazul in care nu il am, se va trimite
+            NULL si se va intoarce un mesaj incorect)
+        - afisez mesajul pe care vreau sa il trimit
+        - trimit mesajul catre server
+        - astept sa primesc raspuns de la server
+        - afisez raspunsul
+    
+    Ce se intampla daca clientul scrie comanda get_book:
+        - citesc de la tastatura id-ul cartii despre care vreau sa
+        aflu mai multe informatii (notam cu ID)
+        - creez un mesaj cu ajutorul functiei compute_get_request 
+        cu urmatorii parametrii:
+            * adresa ip a server-ului catre care trebuie sa transmit date
+            * ruta de acces: /api/v1/tema/library/books/
+            * token-ul de tip JWT (in cazul in care nu il am, se va trimite
+            NULL si se va intoarce un mesaj incorect)
+            * ID-ul cartii care se va lipi de ruta de acces
+        - afisez mesajul pe care vreau sa il trimit
+        - trimit mesajul catre server
+        - astept sa primesc raspuns de la server
+        - afisez raspunsul
+
+    Ce se intampla daca clientul scrie comanda add_book:
+        - citesc titlul cartii pe care vreau sa o adaug
+        - il adaug in structura de tip json oferita de
+        nlohmann
+        - citesc autorul cartii pe care vreau sa o adaug
+        - il adaug in structura de tip json oferita de
+        nlohmann
+        - citesc ce gen are cartea pe care vreau sa o adaug
+        - il adaug in structura de tip json oferita de
+        nlohmann
+        - citesc cine a publicat cartea pe care vreau sa o adaug
+        - il adaug in structura de tip json oferita de
+        nlohmann
+        - citesc numarul de pagini al cartii pe care vreau sa o adaug
+        - il adaug in structura de tip json oferita de
+        nlohmann
+        - creez un mesaj cu ajutorul functiei compute_post_request 
+        cu urmatorii parametrii:
+            * adresa ip a server-ului catre care trebuie sa transmit date
+            * ruta de acces: /api/v1/tema/library/books
+            * tipul de payload: application/json
+            * un json cu datele pe care trebuie sa le trimit serverului
+            * token-ul de tip JWT (in cazul in care nu il am, se va trimite
+            NULL si se va intoarce un mesaj incorect)
+        - afisez mesajul pe care vreau sa il trimit
+        - trimit mesajul catre server
+        - astept sa primesc raspuns de la server
+        - afisez raspunsul
+
+    Ce se intampla daca clientul scrie comanda delete_book:
+        - citesc de la tastatura id-ul cartii pe care vreau sa o sterg
+        (notam cu ID)
+        - creez un mesaj cu ajutorul functiei compute_delete_request 
+        cu urmatorii parametrii:
+            * adresa ip a server-ului catre care trebuie sa transmit date
+            * ruta de acces: /api/v1/tema/library/books/
+            * token-ul de tip JWT (in cazul in care nu il am, se va trimite
+            NULL si se va intoarce un mesaj incorect)
+            * ID-ul cartii care se va lipi de ruta de acces
+        - afisez mesajul pe care vreau sa il trimit
+        - trimit mesajul catre server
+        - astept sa primesc raspuns de la server
+        - afisez raspunsul
+
+    Ce se intampla daca clientul scrie comanda logout:
+        - verific daca am cookie de sesiune
+        - creez un mesaj cu ajutorul functiei compute_get_request
+        cu urmatorii parametrii:
+            * adresa ip a server-ului catre care trebuie sa transmit date
+            * ruta de acces: /api/v1/tema/auth/logout
+            * cookie-uri: daca am
+        - afisez mesajul pe care vreau sa il trimit
+        - trimit mesajul catre server
+        - astept sa primesc raspuns de la server
+        - afisez raspunsul
+        - dupa ce ma deloghez, sterg token-ul JWT si cookie-ul de sesiune
